@@ -1,9 +1,38 @@
+import pytest
+from module import Site
+import yaml
 
+
+with open('testdata.yaml') as f:
+    testdata = yaml.safe_load(f)
+
+site = Site(testdata['address'])
+
+@pytest.fixture
+def path_login():
+    x_selector1 = "//*[@id='login']/div[1]/label/input"
+    # input1 = site.find_element("xpath", x_selector1)
+    # input1.send_keys("test")
+    return x_selector1
+
+def path_passwd():
+    x_selector2 = "//*[@id='login']/div[2]/label/input"
+    # input2 = site.find_element("xpath", x_selector2)
+    # input2.send_keys("test")
+    return x_selector2
 
 @pytest.fixture
 def button():
-    btn_selector = "//*[@id='login']/div[3]/button"
+    btn_selector = "button"
+    # btn = site.find_element("css", btn_selector)
+    # btn.click()
     return btn_selector
+
+@pytest.fixture
+def element():
+    x_selector3 = """//*[@id="app"]/main/div/div/div[2]/h2"""
+    return x_selector3
+
 
 @pytest.fixture
 def element():
