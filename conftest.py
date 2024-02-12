@@ -40,7 +40,7 @@ def element():
     return x_selector3
 
 @pytest.fixture
-def site(score='session'):
+def site(scope='session'):
     site_instance = Site(testdata['address'])
     yield site_instance
     site_instance.close()
