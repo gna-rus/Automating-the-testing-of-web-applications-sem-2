@@ -1,3 +1,4 @@
+import pytest
 import time
 import yaml
 from selenium import webdriver
@@ -53,18 +54,43 @@ class Site:
 with open("./testdata.yaml") as f:
     testdata = yaml.safe_load(f)
     browser = testdata["browser"]
+    username = testdata['user_name']
+    passwd = testdata['passwd']
 
 
 def test_step1():
-    x_selector1 = """//*[@id="login"]/div[1]/label/input"""
-    input1 = site.find_element("xpath", x_selector1)
+    # Тест при не правильном вводе данных пользователя
+    x_selector1 = """//*[@id="login"]/div[1]/label/input""" # вводим Username
+    input1 = Site.find_element("xpath", x_selector1)
     input1.send_keys("test")
-    x_selector2 = """//*[@id="login"]/div[2]/label/input"""
-    input2 = site.find_element("xpath", x_selector2)
+
+    x_selector2 = """//*[@id="login"]/div[2]/label/input"""  # вводим passwd
+    input2 = Site.find_element("xpath", x_selector2)
     input2.send_keys("test")
+
     btn_selector = "button"
-    btn = site.find_element("css", btn_selector)
+    btn = Site.find_element("css", btn_selector)
     btn.click()
-    x_selector3 = """//*[@id="app"]/main/div/div/div[2]/h2"""
-    err_label = site.find_element("xpath", x_selector3)
+
+    x_selector3 = """//*[@id="app"]/main/div/div/div[2]/h2""" # Поиск сообщения об ошибке после неверного ввода
+    err_label = Site.find_element("xpath", x_selector3)
     assert err_label.text() == "401"
+
+def test_step2():
+    # Тест при правильном вводе данных пользователя
+    x_selector1 = """//*[@id="login"]/div[1]/label/input""" # вводим Username
+    input1 = Site.find_element("xpath", x_selector1)
+    input1.send_keys(username)
+
+    x_selector2 = """//*[@id="login"]/div[2]/label/input"""  # вводим passwd
+    input2 = Site.find_element("xpath", x_selector2)
+    input2.send_keys(passwd)
+
+    btn_selector = "button"
+    btn = Site.find_element("css", btn_selector)
+    btn.click()
+
+    x_selector3 = """//*[@id="app"]/main/div/div[1]/h1"""
+    flag_text_blog = Site.find_element("xpath", x_selector3)
+    assert flag_text_blog.text() == "Blog"
+
