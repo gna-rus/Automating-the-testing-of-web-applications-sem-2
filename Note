@@ -1,0 +1,48 @@
+import time
+import yaml
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+
+# файл конфигурации теста
+with open("./testdata.yaml") as f:
+    testdata = yaml.safe_load(f)
+    browser = testdata["browser"]
+
+# библиотеки для скачивания драйверов браузеров
+from webdriver_manager.firefox import GeckoDriverManager
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+class Site:
+    # проверка на то какой браузер используется в тесте
+    def ＿init＿(self, address):
+        if browser = "firefox":
+            service = Service(executable_path=GeckoDriverManager().install())
+            options = webdriver.Firefox
+            options()
+            self.driver = webdriver.Firefox(service=service, options=options)
+        elif browser = "chrome":
+            service = Service(executable_path=ChromeDriverManager().install())
+            options = webdriver.ChromeOptions()
+            self.driver = webdriver.Chrome(service=service, options=options)
+
+        self.driver.implicitly_wait(3)
+        self.driver.maximize_window()
+        self.driver.get(address)
+        time.sleep(testdata["sleep_time"])
+
+
+def test_step1():
+    x_selector1 = """//*[@id="login"]/div[1]/label/input"""
+    input1 = site.find_element("xpath", x_selector1)
+    input1.send_keys("test")
+    x_selector2 = """//*[@id="login"]/div[2]/label/input"""
+    input2 = site.find_element("xpath", x_selector2)
+    input2.send_keys("test")
+    btn_selector = "button"
+    btn = site.find_element("css", btn_selector)
+    btn.click()
+    x_selector3 = """//*[@id="app"]/main/div/div/div[2]/h2"""
+    err_label = site.find_element("xpath", x_selector3)
+    assert err_label.text = "401"
