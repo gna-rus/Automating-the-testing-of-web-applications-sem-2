@@ -1,12 +1,12 @@
 import pytest
-from module import Site
+from Task_2 import Site
 import yaml
 
 
 with open('testdata.yaml') as f:
     testdata = yaml.safe_load(f)
 
-site = Site(testdata['address'])
+site = Site(testdata['addres'])
 
 @pytest.fixture
 def path_login():
