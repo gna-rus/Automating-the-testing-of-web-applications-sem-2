@@ -1,3 +1,5 @@
 browser: chrome
 sleep_time: 1
-addres:
+addres: https://test-stand.gb.ru/login
+user_name: NV12
+passwd: 202f5d8c2c
