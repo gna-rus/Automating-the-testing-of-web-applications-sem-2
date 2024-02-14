@@ -6,7 +6,7 @@ import yaml
 with open('testdata.yaml') as f:
     testdata = yaml.safe_load(f)
 
-site = Site(testdata['addres'])
+site = Site(testdata['browser'], testdata['addres'])
 
 @pytest.fixture
 def path_login():
