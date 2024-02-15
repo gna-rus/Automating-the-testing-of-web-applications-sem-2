@@ -66,23 +66,23 @@ def registration_on_the_website():
     btn = site.find_element("css", btn_selector)
     btn.click()
 
-# def test_step1():
-#     # Тест при не правильном вводе данных пользователя
-#     x_selector1 = """//*[@id="login"]/div[1]/label/input"""  # вводим Username
-#     input1 = site.find_element("xpath", x_selector1)
-#     input1.send_keys("test")
-#
-#     x_selector2 = """//*[@id="login"]/div[2]/label/input"""  # вводим passwd
-#     input2 = site.find_element("xpath", x_selector2)
-#     input2.send_keys("test")
-#
-#     btn_selector = "button"
-#     btn = site.find_element("css", btn_selector)
-#     btn.click()
-#
-#     x_selector3 = """//*[@id="app"]/main/div/div/div[2]/h2"""  # Поиск сообщения об ошибке после неверного ввода
-#     err_label = site.find_element("xpath", x_selector3)
-#     assert err_label.text == "401"
+def test_step1():
+    # Тест при не правильном вводе данных пользователя
+    x_selector1 = """//*[@id="login"]/div[1]/label/input"""  # вводим Username
+    input1 = site.find_element("xpath", x_selector1)
+    input1.send_keys("test")
+
+    x_selector2 = """//*[@id="login"]/div[2]/label/input"""  # вводим passwd
+    input2 = site.find_element("xpath", x_selector2)
+    input2.send_keys("test")
+
+    btn_selector = "button"
+    btn = site.find_element("css", btn_selector)
+    btn.click()
+
+    x_selector3 = """//*[@id="app"]/main/div/div/div[2]/h2"""  # Поиск сообщения об ошибке после неверного ввода
+    err_label = site.find_element("xpath", x_selector3)
+    assert err_label.text == "401"
 
 
 def test_step2():
@@ -119,11 +119,11 @@ def test_step3():
     input_content = site.find_element("xpath", x_content)
     input_content.send_keys("test_content")
 
-    # # Создание колендарь
+    # # Создание колендаря
     # ddd1 = date.today()  # создание даты для ввода
     # ddd1 = ddd1 - timedelta(days=1)
     # i = int(ddd1.day) + 1  # вводим дату на "завтра"
-    #
+    # 
     # x_calendar = """//*[@id="create-item"]/div/div/div[5]/div/div/label"""
     # input_calendar = site.find_element("xpath", x_calendar)
     # input_calendar[i].click()
