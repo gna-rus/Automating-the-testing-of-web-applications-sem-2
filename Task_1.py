@@ -24,7 +24,6 @@ class Site:
         time.sleep(testdata["sleep_time"])
 
     def find_element(self, mode, path):
-        print(2)
         if mode == "css":
             element = self.driver.find_element(By.CSS_SELECTOR, path)
         elif mode == "xpath":
@@ -51,10 +50,21 @@ with open("./testdata.yaml") as f:
     username = testdata['user_name']
     passwd = testdata['passwd']
     addres = testdata['addres']
-    site = Site(browser, addres)
+    site = Site(testdata["browser"],testdata['addres'])
 
 
+def registration_on_the_website():
+    x_selector1 = """//*[@id="login"]/div[1]/label/input"""  # вводим Username
+    input1 = site.find_element("xpath", x_selector1)
+    input1.send_keys(username)
 
+    x_selector2 = """//*[@id="login"]/div[2]/label/input"""  # вводим passwd
+    input2 = site.find_element("xpath", x_selector2)
+    input2.send_keys(passwd)
+
+    btn_selector = "button"
+    btn = site.find_element("css", btn_selector)
+    btn.click()
 
 # def test_step1():
 #     # Тест при не правильном вводе данных пользователя
@@ -77,21 +87,13 @@ with open("./testdata.yaml") as f:
 
 def test_step2():
     # Тест при правильном вводе данных пользователя
-    x_selector1 = """//*[@id="login"]/div[1]/label/input"""  # вводим Username
-    input1 = site.find_element("xpath", x_selector1)
-    input1.send_keys(username)
+    registration_on_the_website()
+    time.sleep(1)
 
-    x_selector2 = """//*[@id="login"]/div[2]/label/input"""  # вводим passwd
-    input2 = site.find_element("xpath", x_selector2)
-    input2.send_keys(passwd)
-
-    btn_selector = "button"
-    btn = site.find_element("css", btn_selector)
-    btn.click()
-
+    # Ищу слово Blog, которое высвечивается после успешной регистрации
     x_selector3 = """//*[@id="app"]/main/div/div[1]/h1"""
     flag_text_blog = site.find_element("xpath", x_selector3)
-    assert flag_text_blog.text() == "Blog"
+    assert flag_text_blog.text == "Blog"
 
 
 def test_step3():
@@ -117,17 +119,17 @@ def test_step3():
     input_content = site.find_element("xpath", x_content)
     input_content.send_keys("test_content")
 
-    # Создание колендарь
-    ddd1 = date.today()  # создание даты для ввода
-    ddd1 = ddd1 - timedelta(days=1)
-    i = int(ddd1.day) + 1  # вводим дату на "завтра"
-
-    x_calendar = """//*[@id="create-item"]/div/div/div[5]/div/div/label"""
-    input_calendar = site.find_element("xpath", x_calendar)
-    input_calendar[i].click()
+    # # Создание колендарь
+    # ddd1 = date.today()  # создание даты для ввода
+    # ddd1 = ddd1 - timedelta(days=1)
+    # i = int(ddd1.day) + 1  # вводим дату на "завтра"
+    #
+    # x_calendar = """//*[@id="create-item"]/div/div/div[5]/div/div/label"""
+    # input_calendar = site.find_element("xpath", x_calendar)
+    # input_calendar[i].click()
 
     #Кликаю на кнопку Save
-    x_btm_save = """/html/body/div[1]/main/div/div/form/div/div/div[7]/div/button/div"""
+    x_btm_save = """/html/body/div/main/div/div/form/div/div/div[7]/div/button/span"""
     btn_save = site.find_element("xpath", x_btm_save)
     btn_save.click()
     print("click save")
@@ -136,5 +138,8 @@ def test_step3():
 
     x_name_post = """//*[@id="app"]/main/div/div[1]/h1"""
     flag_name_post = site.find_element("xpath", x_name_post)
+
+    site.close()
+    time.sleep(5)
 
     assert flag_name_post == "test_titel"
